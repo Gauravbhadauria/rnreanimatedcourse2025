@@ -12,21 +12,31 @@ import Animated, {
 const Episode2 = () => {
   const animatedValue = useSharedValue(0);
 
-  const animatedStyled = useAnimatedStyle(() => {
-    const opacity = interpolate(
+  const animatedStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(animatedValue.value, [0, 50, 100], [1, 0.5, 1]);
+    const backgroundColor = interpolateColor(
       animatedValue.value,
-      [0, 50, 100, 150],
-      [1, 0.7, 0.4, 0.1],
+      [0, 50, 100],
+      ['red', 'orange', 'red'],
+    );
+
+    const width = interpolate(
+      animatedValue.value,
+      [0, 50, 100],
+      [100, 50, 100],
+    );
+    const height = interpolate(
+      animatedValue.value,
+      [0, 50, 100],
+      [100, 50, 100],
     );
 
     return {
       transform: [{ translateX: animatedValue.value }],
       opacity,
-      backgroundColor: interpolateColor(
-        animatedValue.value,
-        [0, 50, 100, 150],
-        ['red', 'orange', 'yellow', 'green'],
-      ),
+      backgroundColor,
+      width,
+      height,
     };
   });
   return (
@@ -41,23 +51,26 @@ const Episode2 = () => {
       <Animated.View
         style={[
           { width: 100, height: 100, backgroundColor: 'red' },
-          animatedStyled,
+          animatedStyle,
         ]}
       ></Animated.View>
       <TouchableOpacity
         style={{ padding: 10, borderWidth: 1 }}
         onPress={() => {
-          if (animatedValue.value == 150) {
-            animatedValue.value = withTiming(0, { duration: 1000 });
+          if (animatedValue.value == 0) {
+            animatedValue.value = withTiming(100, { duration: 1000 });
           } else {
-            animatedValue.value = withTiming(150, { duration: 1000 });
+            animatedValue.value = withTiming(0, { duration: 1000 });
           }
         }}
       >
-        <Text>Start Interpolation</Text>
+        <Text>Start Animation</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 export default Episode2;
+
+//[ 0---->100]
+//[ 1---->.5]
