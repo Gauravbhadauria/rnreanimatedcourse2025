@@ -1,8 +1,8 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import Episode3 from './episodes/Episode3';
+import Episode4 from './episodes/Episode4';
 const App = () => {
-  return <Episode3 />;
+  return <Episode4 />;
 };
 
 export default App;
